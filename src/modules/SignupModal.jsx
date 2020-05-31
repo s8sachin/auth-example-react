@@ -2,12 +2,15 @@ import React, { useState, useRef } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { userSignup } from '../utils/api/user';
+import { useAuthContext, updateTokenForPersistnce } from '../utils/AuthContext';
+import { useHistory } from 'react-router-dom';
 
 const SignupModal = (props) => {
   const {
     isOpen,
     onClose
   } = props;
+  const history = useHistory();
 
   const emailRef = useRef(null);
   const nameRef = useRef(null);
@@ -15,6 +18,14 @@ const SignupModal = (props) => {
   const confirmPasswordRef = useRef(null);
 
   const [error, setError] = useState(null);
+
+  const {
+    user,
+    authenticated,
+    setUserDetails,
+    setAccessToken,
+    setAuthenticated
+  } = useAuthContext();
 
   const setErrorState = (error) => {
     setError(error);
@@ -35,14 +46,20 @@ const SignupModal = (props) => {
     if (password !== confirmPassword) return setErrorState('Password & confirm password mismatch');
 
     try {
-      const data = await userSignup({email, password, name})
-      onClose();
+      const { user, token } = await userSignup({email, password, name});
+      if (user && token) {
+        updateTokenForPersistnce(token);
+        setAccessToken(token);
+        setUserDetails(user);
+        setAuthenticated(true);
+        onClose();
+        history.push('/record');
+      }
     } catch (e) {
       console.error(e);
       setErrorState('Invalid credentials')
     }
   }
-  console.log(emailRef.current)
 
   return (
     <div>

@@ -2,6 +2,8 @@ import React, { useRef, useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { userLogin } from '../utils/api/user';
+import { updateTokenForPersistnce, useAuthContext } from '../utils/AuthContext';
+import { useHistory } from 'react-router-dom';
 
 const LoginModal = ({
   isOpen,
@@ -10,6 +12,15 @@ const LoginModal = ({
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const [error, setError] = useState(null);
+  const history = useHistory();
+
+  const {
+    user,
+    authenticated,
+    setUserDetails,
+    setAccessToken,
+    setAuthenticated
+  } = useAuthContext();
 
   const setErrorState = (error) => {
     setError(error);
@@ -23,8 +34,15 @@ const LoginModal = ({
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
     try {
-      const data = await userLogin({email, password});
-      onClose();
+      const { user, token } = await userLogin({email, password});
+      if (user && token) {
+        updateTokenForPersistnce(token);
+        setAccessToken(token);
+        setUserDetails(user);
+        setAuthenticated(true);
+        onClose();
+        history.push('/record');
+      }
     } catch (e) {
       console.error(e);
       setErrorState('Invalid credentials')
