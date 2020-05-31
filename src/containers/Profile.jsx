@@ -7,10 +7,14 @@ const Profile = () => {
   return(
     <div>
       <NavbarComponent />
-      <div className="bg-white profile-info rounded m-auto position-absolute shadow-lg p-3">
-        <div>
-          <span className="font-weight-bold">Name: {(user && user.name) || 'Sachin '}</span><br />
-          <span className="font-weight-bold">Email: {(user && user.name) || 'sachin@gmail.com'}</span>
+      <div className="bg-white profile-info rounded m-auto position-absolute shadow-lg p-3 mx-3">
+        <div className="">
+          <span className="font-weight-bold">Name: </span><br />
+          <span className="text-truncate d-inline-block max-width-100">{(user && user.name)}Sachin SachinSachinSachinSachinSachinSachin</span><br /><hr />
+          <span className="font-weight-bold">Email: </span><br />
+          <span className="text-truncate d-inline-block max-width-100">{(user && user.email)}</span><br /><hr />
+          <span className="font-weight-bold">Signed up on: </span><br />
+          <span className="text-truncate d-inline-block max-width-100">{(user && new Date(Date.parse(user.createdAt)).toDateString())}</span>
         </div>
       </div>
     </div>

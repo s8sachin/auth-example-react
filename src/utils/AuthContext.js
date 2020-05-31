@@ -19,6 +19,11 @@ export const updateTokenForPersistnce = token => {
   Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 
+export const logoutUser = () => {
+  localStorage.removeItem('token');
+  window.location.href = '/';
+}
+
 export const Auth = props => {
   const [user, setUser] = useState({}); //(initializeAuthState("user"));
   const [authenticated, setAuthenticated] = useState(false); //(initializeAuthState("authenticated"));

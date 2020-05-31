@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import {
   Collapse,
   Navbar,
@@ -9,7 +9,7 @@ import {
   NavItem,
   Button
 } from 'reactstrap';
-import { useAuthContext } from '../utils/AuthContext';
+import { useAuthContext, logoutUser } from '../utils/AuthContext';
 import LoginModal from '../modules/LoginModal';
 import SignupModal from '../modules/SignupModal';
 
@@ -31,8 +31,8 @@ const NavbarComponent = (props) => {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
-            <NavItem className="m-1" active>
-              <Link to="/profile">Profile</Link>
+            <NavItem className="m-1">
+              <NavLink to="/profile">Profile</NavLink>
             </NavItem>
           </Nav>
           <Nav className="ml-auto" navbar>
@@ -47,7 +47,7 @@ const NavbarComponent = (props) => {
               </>)
             : 
               <NavItem>
-                <Button size="sm">Logout</Button>
+                <Button className="w-100" size="sm" onClick={logoutUser}>Logout</Button>
               </NavItem>
             }
           </Nav>
