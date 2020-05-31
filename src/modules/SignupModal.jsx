@@ -53,7 +53,7 @@ const SignupModal = (props) => {
         setUserDetails(user);
         setAuthenticated(true);
         onClose();
-        history.push('/record');
+        history.push('/profile');
       }
     } catch (e) {
       console.error(e);
