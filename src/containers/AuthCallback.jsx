@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import qs from 'qs';
 import {
   useAuthContext,
-  updateTokenForPersistnce
+  updateTokenForPersistnce,
+  logoutUser
 } from '../utils/AuthContext';
 import { userProfile } from '../utils/api/user';
 import FullHeightBackground from '../components/FullHeightBackground';
@@ -22,6 +23,7 @@ const AuthCallback = ({ location, history }) => {
     } catch (err) {
       console.error(err, 'login error');
       // const errorKey = err.response.data.key;
+      logoutUser();
       // history.push('/');
     }
   };

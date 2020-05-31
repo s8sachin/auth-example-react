@@ -10,7 +10,7 @@ axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 const authToken = localStorage.getItem('token');
 if (authToken) updateTokenForPersistnce(authToken);
 
-const PrivateRoute = ({ component: IncomingComponent, ...remainingProps }) => {
+const RouterHoC = ({ component: IncomingComponent, ...remainingProps }) => {
   const { pathname } = remainingProps.location;
   const { user } = useAuthContext();
   /** Check for token again in localStorage */
@@ -30,7 +30,7 @@ function App() {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/auth/callback" component={AuthCallback} />
-            <PrivateRoute exact path="/profile" component={Profile} />
+            <RouterHoC exact path="/profile" component={Profile} />
           </Switch>
         </BrowserRouter>
       </Auth>

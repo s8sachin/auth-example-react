@@ -20,8 +20,9 @@ const NavbarComponent = (props) => {
   const openLoginModal = () => setActiveModal('login');
   const openSignupModal = () => setActiveModal('signup');
 
-  const { user, authenticated } = useAuthContext();
-
+  const { authenticated: isAuthFromContext } = useAuthContext();
+  const token = localStorage.getItem('token');
+  const authenticated = isAuthFromContext || token;
   const toggle = () => setIsOpen(!isOpen);
 
   return (
@@ -31,23 +32,23 @@ const NavbarComponent = (props) => {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
-            <NavItem className="m-1">
+            {authenticated && <NavItem className="m-1">
               <NavLink to="/profile" className="color-brown">Profile</NavLink>
-            </NavItem>
+            </NavItem>}
           </Nav>
           <Nav className="ml-auto" navbar>
             {!authenticated ? (
               <>
               <NavItem className="m-1">
-                <Button className="w-100" size="sm" onClick={openLoginModal}>Login</Button>
+                <Button color="info" className="app-btn w-100" size="sm" onClick={openLoginModal}>Login</Button>
               </NavItem>
               <NavItem className="m-1">
-                <Button className="w-100" size="sm" onClick={openSignupModal}>Sign up</Button>
+                <Button color="info" className="app-btn w-100" size="sm" onClick={openSignupModal}>Sign up</Button>
               </NavItem>
               </>)
             : 
               <NavItem>
-                <Button className="w-100" size="sm" onClick={logoutUser}>Logout</Button>
+                <Button color="info" className="app-btn w-100" size="sm" onClick={logoutUser}>Logout</Button>
               </NavItem>
             }
           </Nav>

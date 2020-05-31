@@ -18,6 +18,7 @@ const SignupModal = (props) => {
   const confirmPasswordRef = useRef(null);
 
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(null);
 
   const {
     user,
@@ -46,18 +47,21 @@ const SignupModal = (props) => {
     if (password !== confirmPassword) return setErrorState('Password & confirm password mismatch');
 
     try {
+      setLoading(true);
       const { user, token } = await userSignup({email, password, name});
       if (user && token) {
         updateTokenForPersistnce(token);
         setAccessToken(token);
         setUserDetails(user);
         setAuthenticated(true);
+        setLoading(false);
         onClose();
         history.push('/profile');
       }
     } catch (e) {
       console.error(e);
-      setErrorState('Invalid credentials')
+      setErrorState('User exists');
+      setLoading(false);
     }
   }
 
@@ -87,7 +91,7 @@ const SignupModal = (props) => {
           </Form>
         </ModalBody>
         <ModalFooter>
-          <Button type="submit" className="w-100" form="signupForm" color="primary" onClick={onclose}>Signup</Button>{' '}
+          <Button disabled={loading} type="submit" className="w-100" form="signupForm" color="primary" onClick={onclose}>Signup</Button>{' '}
           {/* <Button color="secondary" onClick={onClose}>Cancel</Button> */}
         </ModalFooter>
       </Modal>

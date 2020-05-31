@@ -12,6 +12,7 @@ const LoginModal = ({
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(null);
   const history = useHistory();
 
   const {
@@ -34,18 +35,21 @@ const LoginModal = ({
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
     try {
+      setLoading(true);
       const { user, token } = await userLogin({email, password});
       if (user && token) {
         updateTokenForPersistnce(token);
         setAccessToken(token);
         setUserDetails(user);
         setAuthenticated(true);
+        setLoading(false);
         onClose();
         history.push('/profile');
       }
     } catch (e) {
       console.error(e);
-      setErrorState('Invalid credentials')
+      setErrorState('Invalid credentials');
+      setLoading(false);
     }
   }
 
@@ -68,7 +72,7 @@ const LoginModal = ({
           {/* <Button className="w-100" type="submit" form="loginForm" color="primary" onClick={onclose}>Submit</Button>{' '} */}
         </ModalBody>
         <ModalFooter>
-          <Button type="submit" className="w-100" form="loginForm" color="primary" onClick={onclose}>Login</Button>{' '}
+          <Button disabled={loading} type="submit" className="w-100" form="loginForm" color="primary" onClick={onclose}>Login</Button>{' '}
           {/* <Button color="secondary" onClick={onClose}>Cancel</Button> */}
         </ModalFooter>
       </Modal>
