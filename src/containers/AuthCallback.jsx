@@ -6,6 +6,7 @@ import {
   updateTokenForPersistnce
 } from '../utils/AuthContext';
 import { userProfile } from '../utils/api/user';
+import FullHeightBackground from '../components/FullHeightBackground';
 
 const AuthCallback = ({ location, history }) => {
   const { setUserDetails, setAccessToken, setAuthenticated } = useAuthContext();
@@ -21,7 +22,7 @@ const AuthCallback = ({ location, history }) => {
     } catch (err) {
       console.error(err, 'login error');
       // const errorKey = err.response.data.key;
-      history.push('/');
+      // history.push('/');
     }
   };
 
@@ -32,7 +33,12 @@ const AuthCallback = ({ location, history }) => {
     getUser(token, redirect);
   }, []);
 
-  return <></>;
+  return (<>
+    <FullHeightBackground backgroundColor="#6feec5" />
+    <span className="position-absolute m-auto" style={{bottom: 0, top: 0, left: 0, right: 0, width: 200, height: 200}}>
+      <h1>Loading...</h1>
+    </span>
+  </>);
 };
 
 AuthCallback.propTypes = {

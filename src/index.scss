@@ -5,7 +5,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: skyblue;
 }
 
 code {
@@ -16,6 +15,7 @@ code {
 html, body {
   height: 100%;
   margin: 0;
+  // background-color: skyblue !important;
 }
 
 
@@ -30,10 +30,21 @@ html, body {
 .profile-info {
 	width: 300px;
   height: 100%;
-  max-height: 260px;
+  max-height: 300px;
 	
 	top:0;
 	bottom: 0;
 	left: 0;
 	right: 0;
+}
+
+.color-brown {
+  color: #a5440c;
+  &:hover{
+    color: #632908;
+  }
+}
+
+.cursor-default {
+  cursor: default !important;
 }

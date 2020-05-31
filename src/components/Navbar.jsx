@@ -26,13 +26,13 @@ const NavbarComponent = (props) => {
 
   return (
     <div>
-      <Navbar color="light" light expand="md">
-        <NavbarBrand><Link className="text-decoration-none" to="/">Auth example</Link></NavbarBrand>
+      <Navbar color="light" light expand="md" className="shadow">
+        <NavbarBrand><Link className="text-decoration-none font-weight-bold color-brown" to="/">Auth example</Link></NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem className="m-1">
-              <NavLink to="/profile">Profile</NavLink>
+              <NavLink to="/profile" className="color-brown">Profile</NavLink>
             </NavItem>
           </Nav>
           <Nav className="ml-auto" navbar>
